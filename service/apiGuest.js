@@ -48,14 +48,17 @@ export async function checkInGuest(identifier) {
   const guest = guests[0];
   
   if (guest.arrived) {
-    toast('Guest already checked in');
+    toast.error('Guest already checked in');
     return
+  }
+  else{
+     toast.success("Guest checked in successfully!");
   }
 
   // Update the guest
   const { data: updatedGuest, error: updateError } = await supabase
     .from('guests')
-    .update({ arrived: !guest.arrived, updated_at: new Date().toISOString() })
+    .update({ arrived: true, updated_at: new Date().toISOString() })
     .eq('id', guest.id)
     .select()
     .single();

@@ -25,9 +25,10 @@ const handleQuickCheckIn = () => {
   quickCheckInMutation.mutate(
     { identifier: quickCheckIn },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        // console.log(data,"lol")
    
-        toast.success("Guest checked in successfully!");
+       
         setIsOpen(false)
         setQuickCheckIn(""); // optional: reset input
       },

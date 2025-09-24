@@ -40,9 +40,10 @@ export function useQuickCheckIn() {
 
   return useMutation({
     mutationFn: ({ identifier }) => checkInGuest(identifier),
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate the guests list to reflect the change
       queryClient.invalidateQueries({ queryKey: guestKeys.lists() });
+      console.log(data,"lol")
     },
   });
 }
