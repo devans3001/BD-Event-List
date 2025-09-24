@@ -10,6 +10,8 @@ export default function Providers({ children }) {
     defaultOptions: {
       queries: {
         staleTime: 0, // 1 minute
+        refetchOnWindowFocus: true, 
+        refetchOnMount: true,
       },
     },
   }));
