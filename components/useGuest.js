@@ -1,4 +1,4 @@
-import { addMultipleGuests, checkInGuest, getGuests, updateGuestArrival } from "@/service/apiGuest";
+import { addMultipleGuests, checkInGuest, getGuests, revertGuestArrival, updateGuestArrival } from "@/service/apiGuest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -59,3 +59,17 @@ export function useAddMultipleGuests() {
   });
 }
 
+export function useRevertGuestArrival() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => revertGuestArrival(id),
+    onSuccess: (updatedGuest) => {
+      // Update the specific guest in the cache
+      queryClient.setQueryData(guestKeys.details(updatedGuest.id), updatedGuest);
+      
+      // Invalidate and refetch the list to ensure consistency
+      queryClient.invalidateQueries({ queryKey: guestKeys.lists() });
+    },
+  });
+}

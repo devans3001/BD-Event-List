@@ -56,12 +56,13 @@ export async function checkInGuest(identifier, method) {
   
   if (guest.arrived) {
     toast('Guest already checked in');
+    return
   }
 
   // Update the guest
   const { data: updatedGuest, error: updateError } = await supabase
     .from('guests')
-    .update({ arrived: true, updated_at: new Date().toISOString() })
+    .update({ arrived: !guest.arrived, updated_at: new Date().toISOString() })
     .eq('id', guest.id)
     .select()
     .single();
@@ -80,6 +81,24 @@ export async function addMultipleGuests(guestsArray) {
     .from('guests')
     .insert(guestsArray)
     .select();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function revertGuestArrival(id) {
+  const { data, error } = await supabase
+    .from('guests')
+    .update({ 
+      arrived: false,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', id)
+    .select()
+    .single();
 
   if (error) {
     throw new Error(error.message);

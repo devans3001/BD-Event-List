@@ -5,9 +5,10 @@ import GuestItem from "./GuestItem";
 import { useAddMultipleGuests, useGuests } from "./useGuest";
 import Loading from "./Loader";
 import { Button } from "./ui/button";
-import { SearchX } from "lucide-react";
+import { EyeClosed, Home, SearchX } from "lucide-react";
 import { CheckDialog } from "./CheckDialog";
 import { guestss } from "@/helper/data";
+import Link from "next/link";
 
 export default function GuestList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ export default function GuestList() {
   
 
   // Derived counts
-  const arrivedCount = guests.filter((g) => g.arrived).length;
+  const arrivedCount = guests?.filter((g) => g.arrived).length;
   const counts = {
     all: guests.length,
     arrived: arrivedCount,
@@ -57,6 +58,7 @@ export default function GuestList() {
   ];
 
   return (
+    <>
     <div className="max-w-4xl mx-auto p-6">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-blue-600 mb-2">
@@ -145,5 +147,13 @@ export default function GuestList() {
         )}
       </div>
     </div>
+
+    <Button className="absolute top-5 left-5">
+      <Link href="/">
+      <Home/>
+      </Link>
+    </Button>
+    </>
+
   );
 }
