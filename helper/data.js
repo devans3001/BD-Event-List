@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 
 export const guestss = [
   {
@@ -126,3 +128,26 @@ export const guestss = [
     arrived: false,
   }
 ];
+
+
+ const usedCodes = new Set();
+
+  const getUniqueCode = () => {
+    let code;
+    do {
+      code = `BDAY${faker.string.numeric(3)}`;
+    } while (usedCodes.has(code));
+    usedCodes.add(code);
+    return code;
+  };
+
+
+export function generateFakeUsers(count = 10) {
+  return Array.from({ length: count }, () => ({
+    name: faker.person.fullName(),
+    access_code: getUniqueCode(),
+    arrived: false,
+    plus_ones: faker.number.int({ min: 1, max: 2 }),
+
+  }));
+}

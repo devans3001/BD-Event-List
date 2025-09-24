@@ -26,18 +26,11 @@ export async function updateGuestArrival(id, arrived) {
 }
 
 // Check in guest by name or access code
-export async function checkInGuest(identifier, method) {
+export async function checkInGuest(identifier) {
 
-    console.log(identifier,"api")
-    console.log(method,"method")
-  let query = supabase.from('guests').select('*');
   
-  if (method === 'name') {
-    query = query.ilike('name', identifier);
-  } else {
-    query = query.eq('access_code', identifier);
-  }
-
+  let query = supabase.from('guests').select('*').eq('access_code', identifier);
+  
   const { data: guests, error } = await query;
 
   if (error) {
@@ -77,6 +70,8 @@ export async function checkInGuest(identifier, method) {
 
 // add guest - temp
 export async function addMultipleGuests(guestsArray) {
+
+  console.log(guestsArray,"guestsArray")
   const { data, error } = await supabase
     .from('guests')
     .insert(guestsArray)
@@ -94,7 +89,7 @@ export async function revertGuestArrival(id) {
     .from('guests')
     .update({ 
       arrived: false,
-      updated_at: new Date().toISOString()
+      updated_at: null
     })
     .eq('id', id)
     .select()

@@ -39,7 +39,7 @@ export function useQuickCheckIn() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ identifier, method }) => checkInGuest(identifier, method),
+    mutationFn: ({ identifier }) => checkInGuest(identifier),
     onSuccess: () => {
       // Invalidate the guests list to reflect the change
       queryClient.invalidateQueries({ queryKey: guestKeys.lists() });

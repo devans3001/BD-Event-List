@@ -16,7 +16,6 @@ import { toast } from "sonner"
 
 export function CheckDialog() {
   const quickCheckInMutation = useQuickCheckIn()
-  const [checkInMethod, setCheckInMethod] = useState("name")
   const [quickCheckIn, setQuickCheckIn] = useState("")
    const [isOpen, setIsOpen] = useState(false)
 
@@ -24,7 +23,7 @@ const handleQuickCheckIn = () => {
   if (!quickCheckIn.trim()) return;
 
   quickCheckInMutation.mutate(
-    { identifier: quickCheckIn, method: checkInMethod },
+    { identifier: quickCheckIn },
     {
       onSuccess: () => {
    
@@ -52,12 +51,12 @@ const handleQuickCheckIn = () => {
         <DialogHeader>
           <DialogTitle>Quick Check-in</DialogTitle>
           <DialogDescription>
-            Select method and enter details to check in a guest.
+            Select enter details to check in a guest.
           </DialogDescription>
         </DialogHeader>
 
         {/* Toggle buttons */}
-        <div className="flex gap-2 mb-4">
+        {/* <div className="flex gap-2 mb-4">
           <Button
             variant={checkInMethod === "name" ? "default" : "outline"}
             className="flex-1"
@@ -72,17 +71,13 @@ const handleQuickCheckIn = () => {
           >
             By Access Code
           </Button>
-        </div>
+        </div> */}
 
         {/* Input + submit */}
         <div className="flex gap-2">
           <input
             type="text"
-            placeholder={
-              checkInMethod === "name"
-                ? "Enter guest name..."
-                : "Enter access code..."
-            }
+            placeholder={"Enter access code..."}
             value={quickCheckIn}
             onChange={(e) => setQuickCheckIn(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleQuickCheckIn()}

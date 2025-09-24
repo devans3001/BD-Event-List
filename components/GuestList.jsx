@@ -7,8 +7,9 @@ import Loading from "./Loader";
 import { Button } from "./ui/button";
 import { EyeClosed, Home, SearchX } from "lucide-react";
 import { CheckDialog } from "./CheckDialog";
-import { guestss } from "@/helper/data";
+import { generateFakeUsers, guestss } from "@/helper/data";
 import Link from "next/link";
+import ScrollToTop from "./ScrollToTop";
 
 export default function GuestList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,7 +60,7 @@ export default function GuestList() {
 
   return (
     <>
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 mt-10">
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-blue-600 mb-2">
           🎉 Birthday Party Guest List
@@ -71,11 +72,11 @@ export default function GuestList() {
         {/* Stats cards */}
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           {filters.map((f) => (
-            <div key={f.key} className={`p-4 rounded-lg bg-${f.color}-50`}>
+            <div key={f.key} className={`p-4 rounded-lg bg-${f.color}-100`}>
               <p className={`font-bold text-2xl text-${f.color}-800`}>
                 {counts[f.key]}
               </p>
-              <p className={`text-${f.color}-600`}>{f.label}</p>
+              <p className={`text-${f.color}-500`}>{f.label}</p>
             </div>
           ))}
         </div>
@@ -102,7 +103,7 @@ export default function GuestList() {
           </Button>
           <Button
             disabled={isPending}
-            onClick={()=>mutate(guestss)}
+            onClick={()=>mutate(generateFakeUsers(500))}
             >
             add - temp
           </Button>
@@ -111,18 +112,18 @@ export default function GuestList() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex border-b border-gray-200">
+        <div className="flex border-b border-gray-200 mt-5">
           {filters.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`px-6 py-3 font-medium border-b-2 cursor-pointer transition-colors ${
+              className={`px-6 py-1 font-medium border-b-2 cursor-pointer transition-colors ${
                 filter === f.key
                   ? `border-${f.color}-500 text-${f.color}-600`
                   : "border-transparent text-gray-500 hover:text-gray-700"
               }`}
             >
-              {f.label} ({counts[f.key]})
+              {f.label}
             </button>
           ))}
         </div>
@@ -148,11 +149,13 @@ export default function GuestList() {
       </div>
     </div>
 
-    <Button className="absolute top-5 left-5">
+    <Button className="fixed top-5 left-5">
       <Link href="/">
       <Home/>
       </Link>
     </Button>
+
+    <ScrollToTop/>
     </>
 
   );

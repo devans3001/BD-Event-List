@@ -18,17 +18,19 @@ import Link from "next/link";
 
 function Error() {
   const { data: guests = [], isLoading, error } = useGuests();
-
+  const { mutate, isPending } = useRevertGuestArrival();
   // Get recently arrived guests (last 30 minutes)
   const getRecentlyArrivedGuests = () => {
-    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+    const anHour = new Date(Date.now() - 60 * 60 * 1000);
     return guests
       .filter((guest) => guest.arrived)
-      .filter((guest) => new Date(guest.updated_at) > thirtyMinutesAgo)
+      .filter((guest) => new Date(guest.updated_at) > anHour)
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
   };
 
   const recentlyArrived = getRecentlyArrivedGuests();
+
+ 
 
   if (isLoading) return <Loading />;
 
@@ -106,7 +108,7 @@ function Error() {
             <div className="p-6 border-b">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                 <Clock className="h-6 w-6 text-orange-500" />
-                Recent Check-ins (Last 30 Minutes)
+                Recent Check-ins (Last 1 hour)
               </h2>
               <p className="text-gray-600 mt-1">
                 Quickly revert accidental check-ins from the recent period
@@ -121,78 +123,8 @@ function Error() {
             ) : (
               <div className="divide-y">
                 {recentlyArrived.map((guest) => (
-                  <div
-                    key={guest.id}
-                    className="p-6 flex items-center justify-between hover:bg-gray-50"
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-lg text-gray-800">
-                          {guest.name}
-                        </h3>
-                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                          Checked In
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-                        <span>
-                          Access Code:{" "}
-                          <code className="bg-gray-100 px-2 py-1 rounded">
-                            {guest.access_code}
-                          </code>
-                        </span>
-                        {guest.plus_ones > 0 && (
-                          <span>+{guest.plus_ones} guest(s)</span>
-                        )}
-                        <span className="text-green-600">
-                          Checked in at{" "}
-                          {new Date(guest.updated_at).toLocaleTimeString()}
-                        </span>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={() => mutate(guest.id)}
-                      disabled={isPending}
-                      variant="outline"
-                      className="text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700"
-                    >
-                      <Undo2 className="h-4 w-4 mr-2" />
-                      {isPending ? "Reverting..." : "Revert Check-in"}
-                    </Button>
-                  </div>
+                  <Guest key={guest.id} guest={guest} />
                 ))}
-              </div>
-            )}
-          </div>
-
-          {/* All Checked-in Guests Section */}
-          <div className="bg-white rounded-lg shadow-lg">
-            <div className="p-6 border-b">
-              <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <Users className="h-6 w-6 text-blue-500" />
-                All Checked-in Guests
-              </h2>
-              <p className="text-gray-600 mt-1">
-                Revert check-ins for any guest throughout the event
-              </p>
-            </div>
-
-            {guests.filter((g) => g.arrived).length === 0 ? (
-              <div className="p-8 text-center text-gray-500">
-                <UserX className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                <p>No guests have checked in yet</p>
-              </div>
-            ) : (
-              <div className="divide-y">
-                {guests
-                  .filter((g) => g.arrived)
-                  .sort(
-                    (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
-                  )
-                  .map((guest) => (
-                    <Guest key={guest.id} guest={guest} />
-                  ))}
               </div>
             )}
           </div>
@@ -206,10 +138,6 @@ function Error() {
               <li>
                 Use the "Recent Check-ins" section for quick corrections of
                 recent mistakes
-              </li>
-              <li>
-                The "All Checked-in Guests" section shows everyone who has
-                checked in
               </li>
               <li>Reverting a check-in will mark the guest as not arrived</li>
               <li>

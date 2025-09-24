@@ -77,7 +77,7 @@ export default function Home() {
           </div>
 
           {/* Action Buttons */}
-          <div className="space-y-4 sm:space-y-0 sm:flex sm:justify-center sm:gap-4">
+          <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
             <Link href="/guest-list">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
                 <Users className="h-5 w-5 mr-2" />
