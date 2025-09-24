@@ -10,18 +10,17 @@ import {
   Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useGuests, useRevertGuestArrival } from "@/components/useGuest";
-import { toast } from "sonner";
+import { useGuests } from "@/components/useGuest";
 import Loading from "@/components/Loader";
 import Guest from "./Guest";
 import Link from "next/link";
 
 function Error() {
   const { data: guests = [], isLoading, error } = useGuests();
-  const { mutate, isPending } = useRevertGuestArrival();
+
   // Get recently arrived guests (last 30 minutes)
   const getRecentlyArrivedGuests = () => {
-    const anHour = new Date(Date.now() - 60 * 60 * 1000);
+    const anHour = new Date(Date.now() - 30 * 60 * 1000);
     return guests
       .filter((guest) => guest.arrived)
       .filter((guest) => new Date(guest.updated_at) > anHour)
@@ -29,8 +28,6 @@ function Error() {
   };
 
   const recentlyArrived = getRecentlyArrivedGuests();
-
- 
 
   if (isLoading) return <Loading />;
 
@@ -97,7 +94,7 @@ function Error() {
                   <p className="text-2xl font-bold text-gray-800">
                     {recentlyArrived.length}
                   </p>
-                  <p className="text-gray-600">Recent (30min)</p>
+                  <p className="text-gray-600">Recent (30 mins)</p>
                 </div>
               </div>
             </div>
@@ -108,7 +105,7 @@ function Error() {
             <div className="p-6 border-b">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                 <Clock className="h-6 w-6 text-orange-500" />
-                Recent Check-ins (Last 1 hour)
+                Recent Check-ins (Last 30mins)
               </h2>
               <p className="text-gray-600 mt-1">
                 Quickly revert accidental check-ins from the recent period

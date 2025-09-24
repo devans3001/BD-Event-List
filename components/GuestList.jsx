@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { useState } from "react";
 import GuestItem from "./GuestItem";
 import { useAddMultipleGuests, useGuests } from "./useGuest";
@@ -28,15 +29,34 @@ export default function GuestList() {
   };
 
   // Filtered guest list
-  const filteredGuests = guests.filter((guest) => {
-    const matchesSearch =
-      guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      guest.access_code.toLowerCase().includes(searchTerm.toLowerCase());
 
-    if (filter === "arrived") return matchesSearch && guest.arrived;
-    if (filter === "notArrived") return matchesSearch && !guest.arrived;
-    return matchesSearch;
-  });
+const filteredGuests = useMemo(() => {
+  return guests
+    .filter((guest) => {
+      const matchesSearch =
+        guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        guest.access_code.toLowerCase().includes(searchTerm.toLowerCase());
+
+      if (filter === "arrived") return matchesSearch && guest.arrived;
+      if (filter === "notArrived") return matchesSearch && !guest.arrived;
+      return matchesSearch;
+    })
+    .sort((a, b) => {
+      if (filter === "arrived") {
+        return (
+          new Date(b.updated_at).getTime() -
+          new Date(a.updated_at).getTime()
+        );
+      }
+
+       if (filter === "notArrived" || filter === "all") {
+        // 🔹 Sort alphabetically by name
+        return a.name.localeCompare(b.name);
+      }
+      return 0;
+    });
+}, [guests, searchTerm, filter]); // only recompute if any of these change
+
 
   if (isLoading) {
     return <Loading />;
@@ -98,15 +118,16 @@ export default function GuestList() {
             onClick={() => setSearchTerm("")}
             variant="outline"
             disabled={!searchTerm}
+            className="cursor-pointer"
           >
             <SearchX />
           </Button>
-          <Button
+          {/* <Button
             disabled={isPending}
             onClick={()=>mutate(generateFakeUsers(500))}
             >
             add - temp
-          </Button>
+          </Button> */}
           <CheckDialog />
             </div>
         </div>

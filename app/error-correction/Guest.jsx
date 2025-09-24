@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useRevertGuestArrival } from "@/components/useGuest";
 import { useViewport } from "@/components/useView";
+import { formatDistanceToNow } from "date-fns";
 import { Undo2 } from "lucide-react";
 import React from "react";
 import { ClipLoader } from "react-spinners";
@@ -32,7 +33,7 @@ function Guest({ guest }) {
           </span>
           {guest.plus_ones > 0 && <span>+{guest.plus_ones} guest(s)</span>}
           <span className="text-green-600">
-            Checked in at {new Date(guest.updated_at).toLocaleTimeString()}
+            Arrived {formatDistanceToNow(new Date(guest.updated_at), { addSuffix: true })}
           </span>
         </div>
       </div>
