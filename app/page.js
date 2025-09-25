@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, Gift, PartyPopper } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Gift, PartyPopper, Table } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons
           <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
             <Link href="/guest-list">
               <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
@@ -91,7 +91,30 @@ export default function Home() {
                 Correction Center
               </Button>
             </Link>
-          </div>
+          </div> */}
+          {/* Action Buttons */}
+<div className="flex flex-col gap-2 md:flex-row items-center justify-center">
+  <Link href="/guest-list">
+    <Button className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+      <Users className="h-5 w-5 mr-2" />
+      Manage Guest List
+    </Button>
+  </Link>
+  
+  <Link href="/table-overview">
+    <Button className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+      <Table className="h-5 w-5 mr-2" />
+      View Tables
+    </Button>
+  </Link>
+  
+  <Link href="/error-correction">
+    <Button variant="outline" className="w-full sm:w-auto border-purple-200 text-purple-600 hover:bg-purple-50 px-8 py-3 text-lg rounded-full transition-all duration-300">
+      <PartyPopper className="h-5 w-5 mr-2" />
+      Correction Center
+    </Button>
+  </Link>
+</div>
 
           {/* Birthday Message */}
           <div className="mt-12 p-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl border border-yellow-200">
