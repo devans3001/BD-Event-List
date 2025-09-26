@@ -21,7 +21,7 @@ export default function Home() {
               <Gift className="h-12 w-12 text-yellow-500" />
             </div>
             <p className="text-xl md:text-2xl text-gray-600 mb-2">
-              Celebrating <span className="font-semibold text-purple-600">John's Special Day</span>
+              Celebrating <span className="font-semibold text-purple-600">Sir Luke's Special Day</span>
             </p>
             <p className="text-lg text-gray-500">Join us for an unforgettable celebration!</p>
           </div>
@@ -31,15 +31,15 @@ export default function Home() {
             <div className="bg-white p-6 rounded-xl shadow-lg border border-purple-100">
               <Calendar className="h-8 w-8 text-purple-600 mx-auto mb-3" />
               <h3 className="font-semibold text-gray-800 mb-1">Date</h3>
-              <p className="text-gray-600">Saturday, December 16th</p>
-              <p className="text-sm text-gray-500">2023</p>
+              <p className="text-gray-600">Saturday, September 27th</p>
+              <p className="text-sm text-gray-500">2025</p>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-lg border border-pink-100">
               <Clock className="h-8 w-8 text-pink-600 mx-auto mb-3" />
               <h3 className="font-semibold text-gray-800 mb-1">Time</h3>
-              <p className="text-gray-600">6:00 PM - 11:00 PM</p>
-              <p className="text-sm text-gray-500">Cocktails & Dinner</p>
+              <p className="text-gray-600">11:00 am - 05:00 PM</p>
+              {/* <p className="text-sm text-gray-500">Cocktails & Dinner</p> */}
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-lg border border-blue-100">
@@ -58,16 +58,16 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600">150+</div>
+                <div className="text-3xl font-bold text-purple-600">500+</div>
                 <div className="text-sm text-gray-600">Guests Invited</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-pink-600">3</div>
-                <div className="text-sm text-gray-600">Live Bands</div>
+                <div className="text-3xl font-bold text-pink-600">15</div>
+                <div className="text-sm text-gray-600">Cultural Dancers</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">5</div>
-                <div className="text-sm text-gray-600">Course Dinner</div>
+                <div className="text-3xl font-bold text-blue-600">3</div>
+                <div className="text-sm text-gray-600">Course Meal</div>
               </div>
               <div className="text-center">
                 <div className="text-3xl font-bold text-green-600">∞</div>
