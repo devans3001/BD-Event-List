@@ -21,7 +21,7 @@ export default function GuestItem({ guest }) {
       <div className="flex justify-between items-center">
         <div className="flex-1">
           <div className="flex items-center gap-1 md:gap-3 mb-2">
-            <h3 className="font-semibold text-lg">{guest.name}</h3>
+            <h3 className="font-semibold text-lg uppercase">{guest.name}</h3>
             {guest.arrived && (
               <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
                 CHECKED IN
@@ -39,6 +39,10 @@ export default function GuestItem({ guest }) {
                 <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">+{guest.plus_ones}</span>
               </span>
             )}
+               <span className="flex items-center gap-1">
+              <span className="font-medium">Table:</span>
+              <code className="bg-green-100 px-2 py-1 rounded">{guest.tableNum}</code>
+            </span>
           </div>
         </div>
 
